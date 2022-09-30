@@ -2,6 +2,7 @@ package Tela;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Controller.LoginController;
 import LimitaCaracter.LimitaCaracteres;
 
 public class jFrameLogin extends JFrame {
@@ -117,7 +119,7 @@ public class jFrameLogin extends JFrame {
 	public JButton getButtonLogin() {
 		if(buttonLogin == null) {
 			buttonLogin = new JButton();
-//			buttonLogin.addActionListener(e -> cadastroBanco());
+			buttonLogin.addActionListener(e -> loginBanco());
 			buttonLogin.setText("Login");
 			buttonLogin.setBounds(94, 160, 100, 22);
 		}
@@ -137,5 +139,14 @@ public class jFrameLogin extends JFrame {
 	public void novoUsuario() {
 		jFrameNovoUsuario novoUsuario = new jFrameNovoUsuario();
 		novoUsuario.setVisible(true);
+	}
+	
+	public void loginBanco() {
+		try {
+			LoginController login = new LoginController();
+			login.LoginUsuario(this);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
