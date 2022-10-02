@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.LoginController;
 import LimitaCaracter.LimitaCaracteres;
+import Model.Login;
 
 public class jFrameNovoUsuario extends JFrame {
 	private JPanel contentPane;
@@ -26,6 +27,7 @@ public class jFrameNovoUsuario extends JFrame {
 	private JLabel lblSenha;
 	private JPasswordField passwordField;
 	private JButton buttonCadastrar;
+	private Login login;
 
 	/**
 	 * Launch the application.
