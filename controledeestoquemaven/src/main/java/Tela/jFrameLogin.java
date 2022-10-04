@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.postgresql.translation.messages_bg;
+import org.postgresql.util.ServerErrorMessage;
+
 import Controller.LoginController;
 import LimitaCaracter.LimitaCaracteres;
 
@@ -142,11 +145,17 @@ public class jFrameLogin extends JFrame {
 	}
 	
 	public void loginBanco() {
+		validar();
 		try {
 			LoginController login = new LoginController();
 			login.LoginUsuario(this);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void validar() {
+	    StringBuilder mensagem = new StringBuilder();
+	    mensagem.append("Bem-vindo ");
 	}
 }

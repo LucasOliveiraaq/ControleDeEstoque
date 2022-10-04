@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 public class LoginDao {
 
 	public void cadastrarUsuario(String nome, String email, String senha) throws SQLException {
@@ -27,9 +30,21 @@ public class LoginDao {
 		PreparedStatement statment = conexao.prepareStatement(sql);
 		ResultSet rs =  statment.executeQuery();
 		if(rs.next()) {
-			System.out.println("Usuario já cadastrado");
+			String msg = "Seja Bem vindo!";
+			 JOptionPane optionPane = new JOptionPane();
+		      optionPane.setMessage(msg);
+		      optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+		      JDialog dialog = optionPane.createDialog(null, "Login");
+		      dialog.setVisible(true);
+//			System.out.println("Usuario já cadastrado");
 		} else {
-			System.out.println("Usuario não possui cadastro");
+//			System.out.println("Usuario não possui cadastro");
+			String msg = "Usuario não possui cadastro";
+			 JOptionPane optionPane = new JOptionPane();
+		      optionPane.setMessage(msg);
+		      optionPane.setMessageType(JOptionPane.CANCEL_OPTION);
+		      JDialog dialog = optionPane.createDialog(null, "Login");
+		      dialog.setVisible(true);
 		}
 		conexao.close();
 	}
