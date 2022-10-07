@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import Tela.jFrameMenuInicial;
+
 public class LoginDao {
 
 	public void cadastrarUsuario(String nome, String email, String senha) throws SQLException {
@@ -30,19 +32,21 @@ public class LoginDao {
 		PreparedStatement statment = conexao.prepareStatement(sql);
 		ResultSet rs =  statment.executeQuery();
 		if(rs.next()) {
-			String msg = "Seja Bem vindo!";
-			 JOptionPane optionPane = new JOptionPane();
-		      optionPane.setMessage(msg);
-		      optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-		      JDialog dialog = optionPane.createDialog(null, "Login");
-		      dialog.setVisible(true);
-//			System.out.println("Usuario já cadastrado");
+			if(email != null && senha != null) {
+				String msg = "Seja Bem vindo!";
+				JOptionPane optionPane = new JOptionPane();
+				optionPane.setMessage(msg);
+				optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+				JDialog dialog = optionPane.createDialog(null, "Login");
+				dialog.setVisible(true);
+				jFrameMenuInicial menuInicial = new jFrameMenuInicial();
+				menuInicial.setVisible(true);
+			}
 		} else {
-//			System.out.println("Usuario não possui cadastro");
 			String msg = "Usuario não possui cadastro";
 			 JOptionPane optionPane = new JOptionPane();
 		      optionPane.setMessage(msg);
-		      optionPane.setMessageType(JOptionPane.CANCEL_OPTION);
+		      optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
 		      JDialog dialog = optionPane.createDialog(null, "Login");
 		      dialog.setVisible(true);
 		}

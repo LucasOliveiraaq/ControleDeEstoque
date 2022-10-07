@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -122,7 +123,7 @@ public class jFrameLogin extends JFrame {
 	public JButton getButtonLogin() {
 		if(buttonLogin == null) {
 			buttonLogin = new JButton();
-			buttonLogin.addActionListener(e -> loginBanco());
+			buttonLogin.addActionListener(e -> validacao());
 			buttonLogin.setText("Login");
 			buttonLogin.setBounds(94, 160, 100, 22);
 		}
@@ -144,18 +145,22 @@ public class jFrameLogin extends JFrame {
 		novoUsuario.setVisible(true);
 	}
 	
-	public void loginBanco() {
-		validar();
-		try {
-			LoginController login = new LoginController();
-			login.LoginUsuario(this);
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public void validacao() {
+		if(textFieldLogin.getText().isEmpty()) {
+			 JOptionPane.showMessageDialog(null, "Por favor, informe o seu email.");
+		} else if(textFieldSenha.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe uma senha.");
+		}else {
+			loginBanco();
 		}
 	}
 	
-	public void validar() {
-	    StringBuilder mensagem = new StringBuilder();
-	    mensagem.append("Bem-vindo ");
+	public void loginBanco() {
+		try {
+			LoginController login = new LoginController();
+			login.LoginUsuario(this);		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
