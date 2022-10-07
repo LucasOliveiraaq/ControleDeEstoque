@@ -32,16 +32,12 @@ public class LoginDao {
 		PreparedStatement statment = conexao.prepareStatement(sql);
 		ResultSet rs =  statment.executeQuery();
 		if(rs.next()) {
-			if(email != null && senha != null) {
 				String msg = "Seja Bem vindo!";
 				JOptionPane optionPane = new JOptionPane();
 				optionPane.setMessage(msg);
 				optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
 				JDialog dialog = optionPane.createDialog(null, "Login");
 				dialog.setVisible(true);
-				jFrameMenuInicial menuInicial = new jFrameMenuInicial();
-				menuInicial.setVisible(true);
-			}
 		} else {
 			String msg = "Usuario não possui cadastro";
 			 JOptionPane optionPane = new JOptionPane();
