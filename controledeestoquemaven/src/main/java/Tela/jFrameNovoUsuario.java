@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
@@ -16,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.LoginController;
 import LimitaCaracter.LimitaCaracteres;
 import Model.Login;
+import java.awt.Color;
 
 public class jFrameNovoUsuario extends JFrame {
 	private JPanel contentPane;
@@ -28,6 +30,8 @@ public class jFrameNovoUsuario extends JFrame {
 	private JPasswordField passwordField;
 	private JButton buttonCadastrar;
 	private Login login;
+	private JPanel panel;
+	private JPanel panel_1;
 
 	/**
 	 * Launch the application.
@@ -52,6 +56,7 @@ public class jFrameNovoUsuario extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(139, 0, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -63,11 +68,14 @@ public class jFrameNovoUsuario extends JFrame {
 		contentPane.add(getLblSenha());
 		contentPane.add(getPasswordField());
 		contentPane.add(getButtonCadastrar());
+		contentPane.add(getPanel());
+		contentPane.add(getPanel_1());
 	}
 
 	public JLabel getlblCadastroNovoUsuario() {
 		if(lblCadastroNovoUsuario == null) {
 			 lblCadastroNovoUsuario = new JLabel();
+			 lblCadastroNovoUsuario.setForeground(new Color(255, 255, 255));
 			 lblCadastroNovoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			 lblCadastroNovoUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 			 lblCadastroNovoUsuario.setLocation(84, 0);
@@ -80,6 +88,7 @@ public class jFrameNovoUsuario extends JFrame {
 	public JLabel getLblNome() {
 		if(lblNome == null) {
 			lblNome = new JLabel();			
+			lblNome.setForeground(new Color(255, 255, 255));
 			lblNome.setLocation(94, 41);
 			lblNome.setSize(100, 20);
 			lblNome.setText("Nome: ");
@@ -100,6 +109,7 @@ public class jFrameNovoUsuario extends JFrame {
 	public JLabel getLblEmail() {
 		if(lblEmail == null) {
 			lblEmail = new JLabel();			
+			lblEmail.setForeground(new Color(255, 255, 255));
 			lblEmail.setLocation(94, 90);
 			lblEmail.setSize(100, 20);
 			lblEmail.setText("Email: ");
@@ -120,6 +130,7 @@ public class jFrameNovoUsuario extends JFrame {
 	public JLabel getLblSenha() {
 		if(lblSenha == null) {
 			lblSenha = new JLabel();			
+			lblSenha.setForeground(new Color(255, 255, 255));
 			lblSenha.setLocation(94, 135);
 			lblSenha.setSize(100, 20);
 			lblSenha.setText("Senha: ");
@@ -139,12 +150,23 @@ public class jFrameNovoUsuario extends JFrame {
 	public JButton getButtonCadastrar() {
 		if(buttonCadastrar == null) {
 			buttonCadastrar = new JButton();
-			buttonCadastrar.addActionListener(e -> cadastroBanco());
+			buttonCadastrar.addActionListener(e -> validacao());
 			buttonCadastrar.setText("Cadastrar");
 			buttonCadastrar.setBounds(94, 190, 214, 22);
 		}
 		return buttonCadastrar;
 
+	}
+	public void validacao() {
+		if(textFieldNome.getText().isEmpty()) {
+			 JOptionPane.showMessageDialog(null, "Por favor, informe o seu nome.");
+		} else if(textFieldEmail.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe uma email.");
+		}else if(passwordField.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Por favor, informe uma senha.");
+		}else {
+			cadastroBanco();
+		}
 	}
 	
 	public void cadastroBanco() {
@@ -154,5 +176,21 @@ public class jFrameNovoUsuario extends JFrame {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setBackground(new Color(128, 0, 128));
+			panel.setBounds(0, 0, 10, 261);
+		}
+		return panel;
+	}
+	private JPanel getPanel_1() {
+		if (panel_1 == null) {
+			panel_1 = new JPanel();
+			panel_1.setBackground(new Color(128, 0, 128));
+			panel_1.setBounds(0, 251, 434, 10);
+		}
+		return panel_1;
 	}
 }
