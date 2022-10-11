@@ -11,7 +11,8 @@ public class LimitaCaracteres extends PlainDocument {
 	public enum TipoEntrada{
 		nome, 
 		email, 
-		senha;
+		senha,
+		idade;
 	};
 	
 	private int quantidadeDeCaracteres;
@@ -34,6 +35,7 @@ public class LimitaCaracteres extends PlainDocument {
 		case nome: regex = "[^\\p{IsLatin}]"; break;
 		case email: regex = "[^\\p{IsLatin}@.\\-_] [^0-9]"; break;
 		case senha: regex = "[^0-9]"; break;
+		case idade: regex = "[^0-9]"; break; 
 		}
 		str = str.replaceAll(regex, "");
 		if(totalCarac <= quantidadeDeCaracteres) {

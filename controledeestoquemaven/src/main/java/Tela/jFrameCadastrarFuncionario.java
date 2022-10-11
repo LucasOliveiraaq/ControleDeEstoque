@@ -1,0 +1,117 @@
+package Tela;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.util.GregorianCalendar;
+
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import LimitaCaracter.LimitaCaracteres;
+
+public class jFrameCadastrarFuncionario extends JFrame {
+
+	private JPanel contentPane;
+	private JLabel lblCadastrarFuncionario;
+	private JLabel lblNome;
+	private JFormattedTextField textFieldNome;
+	private JLabel lblIdade;
+	private JFormattedTextField textFieldIdade;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					jFrameCadastrarFuncionario frame = new jFrameCadastrarFuncionario();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public jFrameCadastrarFuncionario() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		contentPane.setBackground(new Color(139, 0, 139));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		contentPane.add(getlblCadastrarFuncionario());
+		contentPane.add(getLblNome());
+		contentPane.add(getTextFieldNome());
+		contentPane.add(getLblIdade());
+		contentPane.add(getTextFieldIdade());
+	}
+	
+	public JLabel getlblCadastrarFuncionario() {
+		if(lblCadastrarFuncionario == null) {
+			lblCadastrarFuncionario = new JLabel();
+			lblCadastrarFuncionario.setBounds(79, 0, 262, 30);
+			lblCadastrarFuncionario.setForeground(new Color(255, 255, 255));
+			lblCadastrarFuncionario.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			lblCadastrarFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
+			lblCadastrarFuncionario.setText("Cadastrar funcionario");
+		}
+		return lblCadastrarFuncionario;
+	}
+	
+	public JLabel getLblNome() {
+		if(lblNome == null) {
+			lblNome = new JLabel();			
+			lblNome.setForeground(new Color(255, 255, 255));
+			lblNome.setLocation(94, 41);
+			lblNome.setSize(100, 20);
+			lblNome.setText("Nome: ");
+		}
+		return lblNome;
+	}
+	
+	public JFormattedTextField getTextFieldNome() {
+		if(textFieldNome == null) {
+			textFieldNome = new JFormattedTextField();
+			textFieldNome.setLocation(94, 63);
+			textFieldNome.setSize(214, 22);
+			textFieldNome.setDocument(new LimitaCaracteres(50, LimitaCaracteres.TipoEntrada.nome));
+		}
+		return textFieldNome;
+	}
+	
+	public JLabel getLblIdade() {
+		if(lblIdade == null) {
+			lblIdade = new JLabel();			
+			lblIdade.setForeground(new Color(255, 255, 255));
+			lblIdade.setLocation(94, 100);
+			lblIdade.setSize(100, 20);
+			lblIdade.setText("Idade: ");
+		}
+		return lblIdade;
+	}
+	
+	public JFormattedTextField getTextFieldIdade() {
+		if(textFieldIdade == null) {
+			textFieldIdade = new JFormattedTextField();
+			textFieldIdade.setLocation(94, 123);
+			textFieldIdade.setSize(214, 22);
+			textFieldIdade.setDocument(new LimitaCaracteres(3, LimitaCaracteres.TipoEntrada.idade));
+		}
+		return textFieldIdade;
+	}
+
+}

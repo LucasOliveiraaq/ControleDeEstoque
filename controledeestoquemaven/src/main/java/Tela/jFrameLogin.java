@@ -30,7 +30,6 @@ public class jFrameLogin extends JFrame {
 	private JLabel lblSenha;
 	private JFormattedTextField textFieldSenha;
 	private JButton buttonLogin;
-	private JButton buttonNovoUsuario;
 	private JPanel panel;
 	private JPanel panel_1;
 
@@ -68,7 +67,6 @@ public class jFrameLogin extends JFrame {
 		contentPane.add(getLblSenha());
 		contentPane.add(getTextFieldSenha());
 		contentPane.add(getButtonLogin());
-		contentPane.add(getButtonNovoUsuario());
 		contentPane.add(getPanel());
 		contentPane.add(getPanel_1());
 	}
@@ -76,7 +74,7 @@ public class jFrameLogin extends JFrame {
 	public JLabel getlblTelaDeLogin() {
 		if(lblTelaDeLogin == null) {
 			lblTelaDeLogin = new JLabel();
-			lblTelaDeLogin.setBounds(84, 0, 262, 30);
+			lblTelaDeLogin.setBounds(79, 0, 262, 30);
 			lblTelaDeLogin.setForeground(new Color(255, 255, 255));
 			lblTelaDeLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			lblTelaDeLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -128,26 +126,11 @@ public class jFrameLogin extends JFrame {
 	public JButton getButtonLogin() {
 		if(buttonLogin == null) {
 			buttonLogin = new JButton();
-			buttonLogin.setBounds(94, 160, 100, 22);
+			buttonLogin.setBounds(94, 160, 214, 22);
 			buttonLogin.addActionListener(e -> validacao());
 			buttonLogin.setText("Login");
 		}
 		return buttonLogin;
-	}
-	
-	public JButton getButtonNovoUsuario() {
-		if(buttonNovoUsuario == null) {
-			buttonNovoUsuario = new JButton();
-			buttonNovoUsuario.setBounds(208, 160, 100, 22);
-			buttonNovoUsuario.addActionListener(e -> novoUsuario());
-			buttonNovoUsuario.setText("Novo Usuario");
-		}
-		return buttonNovoUsuario;
-	}
-
-	public void novoUsuario() {
-		jFrameNovoUsuario novoUsuario = new jFrameNovoUsuario();
-		novoUsuario.setVisible(true);
 	}
 	
 	public void validacao() {
@@ -179,7 +162,9 @@ public class jFrameLogin extends JFrame {
 	public void loginBanco() {
 		try {
 			LoginController login = new LoginController();
-			login.LoginUsuario(this);		
+			login.LoginUsuario(this);
+			jFrameMenuInicial menuInicial = new jFrameMenuInicial();
+			menuInicial.setVisible(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -22,6 +22,7 @@ public class jFrameMenuInicial extends JFrame {
 	
 	private JMenuItem itemExit = new JMenuItem("Exit");
 	private JMenuItem novoUsuario = new JMenuItem("Cadastrar novo usuario");
+	private JMenuItem novoFuncionario = new JMenuItem("Cadastrar novo funcionario");
 
 	/**
 	 * Launch the application.
@@ -44,7 +45,7 @@ public class jFrameMenuInicial extends JFrame {
 	 */
 	public jFrameMenuInicial() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(139, 0, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,6 +72,14 @@ public class jFrameMenuInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				jFrameNovoUsuario novoUsuario = new jFrameNovoUsuario();
 				novoUsuario.setVisible(true);
+			}
+		});
+		menu1.add(novoFuncionario);
+		novoFuncionario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jFrameCadastrarFuncionario novoFuncionario = new jFrameCadastrarFuncionario();
+				novoFuncionario.setVisible(true);
 			}
 		});
 		
