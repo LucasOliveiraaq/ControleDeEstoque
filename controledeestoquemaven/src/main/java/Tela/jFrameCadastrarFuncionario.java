@@ -3,6 +3,8 @@ package Tela;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.GregorianCalendar;
 
 import javax.swing.JFormattedTextField;
@@ -11,8 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
+import Controller.FuncionarioController;
+import Controller.LoginController;
 import LimitaCaracter.LimitaCaracteres;
+import javax.swing.DropMode;
+import javax.swing.JButton;
 
 public class jFrameCadastrarFuncionario extends JFrame {
 
@@ -22,6 +29,9 @@ public class jFrameCadastrarFuncionario extends JFrame {
 	private JFormattedTextField textFieldNome;
 	private JLabel lblIdade;
 	private JFormattedTextField textFieldIdade;
+	private JLabel lblDataCadastro;
+	private JFormattedTextField textFieldDataCadastro;
+	private JButton buttonCadastro;
 
 	/**
 	 * Launch the application.
@@ -58,6 +68,9 @@ public class jFrameCadastrarFuncionario extends JFrame {
 		contentPane.add(getTextFieldNome());
 		contentPane.add(getLblIdade());
 		contentPane.add(getTextFieldIdade());
+		contentPane.add(getTextFieldDataCadastro());
+		contentPane.add(getLblDataCadastro());
+		contentPane.add(getButtonCadastro());
 	}
 	
 	public JLabel getlblCadastrarFuncionario() {
@@ -113,5 +126,47 @@ public class jFrameCadastrarFuncionario extends JFrame {
 		}
 		return textFieldIdade;
 	}
-
+	
+	public JLabel getLblDataCadastro() {
+		if(lblDataCadastro == null) {
+			lblDataCadastro = new JLabel();			
+			lblDataCadastro.setForeground(new Color(255, 255, 255));
+			lblDataCadastro.setLocation(94, 155);
+			lblDataCadastro.setSize(100, 20);
+			lblDataCadastro.setText("Data Cadastro: ");
+		}
+		return lblDataCadastro;
+	}
+	
+	public JFormattedTextField getTextFieldDataCadastro() {
+		if(textFieldDataCadastro == null) {
+			try {
+				textFieldDataCadastro = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			textFieldDataCadastro.setLocation(94, 175);
+			textFieldDataCadastro.setSize(68, 22);
+		}
+		return textFieldDataCadastro;
+	}
+	
+	public JButton getButtonCadastro() {
+		if(buttonCadastro == null) {
+			buttonCadastro = new JButton();
+			buttonCadastro.setBounds(94, 205, 214, 22);
+			buttonCadastro.addActionListener(e -> cadastroBanco());
+			buttonCadastro.setText("Cadastro");
+		}
+		return buttonCadastro;
+	}
+	
+	public void cadastroBanco() {
+		try {
+			FuncionarioController cadastro = new FuncionarioController();
+			cadastro.CadastroFuncionario(this);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

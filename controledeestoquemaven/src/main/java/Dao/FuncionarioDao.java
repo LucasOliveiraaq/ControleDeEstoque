@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class FuncionarioDao {
 
-	public void cadastrarFuncionario(String nome, int idade, Date dataCadastro) throws SQLException {
+	public void cadastrarFuncionario(String nome, String idade, Date dataCadastro) throws SQLException {
 		Connection conexao = new Conexao().getConnection();
 		String sql = "insert into funcionario(nome, idade, datacadastro) values ('"+nome+"', '"+idade+"', '"+dataCadastro+"')";
 		PreparedStatement statment = conexao.prepareStatement(sql);
