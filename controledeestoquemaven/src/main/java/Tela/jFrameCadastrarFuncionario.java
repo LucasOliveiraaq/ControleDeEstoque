@@ -5,11 +5,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -140,11 +143,8 @@ public class jFrameCadastrarFuncionario extends JFrame {
 	
 	public JFormattedTextField getTextFieldDataCadastro() {
 		if(textFieldDataCadastro == null) {
-			try {
-				textFieldDataCadastro = new JFormattedTextField(new MaskFormatter("##/##/####"));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			textFieldDataCadastro = new JFormattedTextField();
+			textFieldDataCadastro.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
 			textFieldDataCadastro.setLocation(94, 175);
 			textFieldDataCadastro.setSize(68, 22);
 		}
@@ -155,10 +155,20 @@ public class jFrameCadastrarFuncionario extends JFrame {
 		if(buttonCadastro == null) {
 			buttonCadastro = new JButton();
 			buttonCadastro.setBounds(94, 205, 214, 22);
-			buttonCadastro.addActionListener(e -> cadastroBanco());
+			buttonCadastro.addActionListener(e -> validacao());
 			buttonCadastro.setText("Cadastro");
 		}
 		return buttonCadastro;
+	}
+	
+	public void validacao() {
+		if(textFieldNome.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe o nome.");
+		} else if(textFieldIdade.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe a idade.");
+		} else {
+			cadastroBanco();
+		}
 	}
 	
 	public void cadastroBanco() {
