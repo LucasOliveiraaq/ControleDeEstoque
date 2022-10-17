@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,13 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
 
 import Controller.FuncionarioController;
-import Controller.LoginController;
-import LimitaCaracter.LimitaCaracteres;
-import javax.swing.DropMode;
-import javax.swing.JButton;
+import LimitaCaracteres.LimitaCaracteres;
 
 public class jFrameCadastrarFuncionario extends JFrame {
 

@@ -1,5 +1,6 @@
 package Tela;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.sql.SQLException;
@@ -15,9 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Controller.LoginController;
-import LimitaCaracter.LimitaCaracteres;
+import LimitaCaracteres.LimitaCaracteres;
 import Model.Login;
-import java.awt.Color;
 
 public class jFrameNovoUsuario extends JFrame {
 	private JPanel contentPane;

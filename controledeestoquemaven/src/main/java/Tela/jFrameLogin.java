@@ -1,10 +1,10 @@
 package Tela;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -14,12 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.postgresql.translation.messages_bg;
-import org.postgresql.util.ServerErrorMessage;
-
 import Controller.LoginController;
-import LimitaCaracter.LimitaCaracteres;
-import java.awt.Color;
+import LimitaCaracteres.LimitaCaracteres;
 
 public class jFrameLogin extends JFrame {
 
