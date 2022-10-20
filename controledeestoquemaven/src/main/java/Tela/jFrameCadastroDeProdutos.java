@@ -18,6 +18,7 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFormattedTextField.AbstractFormatterFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -48,6 +49,7 @@ public class jFrameCadastroDeProdutos extends JFrame {
 	private JButton buttonIncluir;
 	private JButton buttonDeletar;
 	private JButton buttonAlterar;
+	private JLabel lblTipoProduto;
 	private JComboBox categoria;
 	
 	/**
@@ -95,6 +97,7 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		contentPane.add(getButtonDeletar());
 		contentPane.add(getButtonAlterar());
 		contentPane.add(getButtonCategoria());
+		contentPane.add(getlblTipoProduto());
 	}
 	
 	public JLabel getlblCadastroDeProdutos() {
@@ -125,7 +128,7 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		if(textFieldCodigoProduto == null) {
 			textFieldCodigoProduto = new JFormattedTextField();
 			textFieldCodigoProduto.setLocation(140, 41);
-			textFieldCodigoProduto.setSize(109, 22);
+			textFieldCodigoProduto.setSize(72, 22);
 			textFieldCodigoProduto.setDocument(new LimitaCaracteres(20, LimitaCaracteres.TipoEntrada.codigo));
 		}
 		return textFieldCodigoProduto;
@@ -193,27 +196,27 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			textFieldQuantidade = new JFormattedTextField();
 			textFieldQuantidade.setLocation(140, 175);
 			textFieldQuantidade.setSize(109, 22);
-			textFieldQuantidade.setFormatterFactory(new AbstractFormatterFactory() {
-
-	            @Override
-	            public AbstractFormatter getFormatter(JFormattedTextField tf) {
-	                DecimalFormat format = new DecimalFormat();
-	                format.setMinimumFractionDigits(2);
-	                format.setMaximumFractionDigits(2);
-	                format.setRoundingMode(RoundingMode.HALF_UP);
-
-	                DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(getLocale());
-	                otherSymbols.setDecimalSeparator('.');
-
-	                format.setDecimalFormatSymbols(otherSymbols);
-	                NumberFormatter formatter = new NumberFormatter(format);
-	                formatter.setAllowsInvalid(false);
-	                formatter.setMinimum(0.00);
-	                formatter.setMaximum(9.99);
-	                return formatter;
-	            }
-
-	        });			
+//			textFieldQuantidade.setFormatterFactory(new AbstractFormatterFactory() {
+//
+//	            @Override
+//	            public AbstractFormatter getFormatter(JFormattedTextField tf) {
+//	                DecimalFormat format = new DecimalFormat();
+//	                format.setMinimumFractionDigits(2);
+//	                format.setMaximumFractionDigits(2);
+//	                format.setRoundingMode(RoundingMode.HALF_UP);
+//
+//	                DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(getLocale());
+//	                otherSymbols.setDecimalSeparator('.');
+//
+//	                format.setDecimalFormatSymbols(otherSymbols);
+//	                NumberFormatter formatter = new NumberFormatter(format);
+//	                formatter.setAllowsInvalid(false);
+//	                formatter.setMinimum(0.00);
+//	                formatter.setMaximum(9.99);
+//	                return formatter;
+//	            }
+//
+//	        });			
 			textFieldQuantidade.setDocument(new LimitaCaracteres(20, LimitaCaracteres.TipoEntrada.codigo)); //codigo é só numero tbm
 			textFieldQuantidade.add(scrollTextArea);
 		}
@@ -236,27 +239,27 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		if(textFieldPreco == null) {
 			textFieldPreco = new JFormattedTextField();
 			textFieldPreco.setLocation(140, 210);
-			textFieldPreco.setFormatterFactory(new AbstractFormatterFactory() {
-
-	            @Override
-	            public AbstractFormatter getFormatter(JFormattedTextField tf) {
-	                DecimalFormat format = new DecimalFormat();
-	                format.setMinimumFractionDigits(2);
-	                format.setMaximumFractionDigits(2);
-	                format.setRoundingMode(RoundingMode.HALF_UP);
-
-	                DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(getLocale());
-	                otherSymbols.setDecimalSeparator('.');
-
-	                format.setDecimalFormatSymbols(otherSymbols);
-	                NumberFormatter formatter = new NumberFormatter(format);
-	                formatter.setAllowsInvalid(false);
-	                formatter.setMinimum(0.00);
-	                formatter.setMaximum(9.99);
-	                return formatter;
-	            }
-
-	        });		
+//			textFieldPreco.setFormatterFactory(new AbstractFormatterFactory() {
+//
+//	            @Override
+//	            public AbstractFormatter getFormatter(JFormattedTextField tf) {
+//	                DecimalFormat format = new DecimalFormat();
+//	                format.setMinimumFractionDigits(2);
+//	                format.setMaximumFractionDigits(2);
+//	                format.setRoundingMode(RoundingMode.HALF_UP);
+//
+//	                DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(getLocale());
+//	                otherSymbols.setDecimalSeparator('.');
+//
+//	                format.setDecimalFormatSymbols(otherSymbols);
+//	                NumberFormatter formatter = new NumberFormatter(format);
+//	                formatter.setAllowsInvalid(false);
+//	                formatter.setMinimum(0.00);
+//	                formatter.setMaximum(9.99);
+//	                return formatter;
+//	            }
+//
+//	        });		
 			textFieldPreco.setSize(109, 22);
 			textFieldPreco.setDocument(new LimitaCaracteres(20, LimitaCaracteres.TipoEntrada.codigo));
 		}
@@ -267,7 +270,7 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		if(buttonIncluir == null) {
 			buttonIncluir = new JButton();
 			buttonIncluir.setBounds(79, 243, 82, 22);
-			buttonIncluir.addActionListener(e -> incluirBanco());
+			buttonIncluir.addActionListener(e -> validacao());
 			buttonIncluir.setText("Incluir");
 		}
 		return buttonIncluir;
@@ -289,6 +292,18 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			buttonAlterar.setText("Alterar");
 		}
 		return buttonAlterar;
+	}
+	
+	public JLabel getlblTipoProduto() {
+		if(lblTipoProduto == null) {
+			lblTipoProduto = new JLabel();
+			lblTipoProduto.setBounds(170, 37, 137, 30);
+			lblTipoProduto.setForeground(new Color(255, 255, 255));
+			lblTipoProduto.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			lblTipoProduto.setHorizontalAlignment(SwingConstants.CENTER);
+			lblTipoProduto.setText("Tipo: ");
+		}
+		return lblTipoProduto;
 	}
 	
 	public JComboBox getButtonCategoria() {
@@ -317,6 +332,24 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			produto.cadastrarProduto(this);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void validacao() {
+		if(categoria.getSelectedItem() == null || categoria.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(null, "Selecione uma categoria.,");
+		} else if(textFieldCodigoProduto.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Por favor, informe o codigo.");
+		} else if(textFieldNome.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe o nome.");
+		} else if(textAreaDescricao.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe a descrição.");
+		} else if(textFieldQuantidade.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe a quantidade.");
+		} else if(textFieldPreco.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Por favor, informe o preço.");
+		}else {
+			incluirBanco();
 		}
 	}
 }
