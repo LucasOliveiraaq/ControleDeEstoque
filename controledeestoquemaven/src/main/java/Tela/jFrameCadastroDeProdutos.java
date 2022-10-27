@@ -1,34 +1,35 @@
 package Tela;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.math.RoundingMode;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.JFormattedTextField.AbstractFormatterFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.ProdutoController;
 import Dao.ProdutoDao;
 import LimitaCaracteres.LimitaCaracteres;
+import Model.Produto;
+import Model.ProdutoTableModel;
+import javax.swing.JScrollBar;
 
 
 public class jFrameCadastroDeProdutos extends JFrame {
@@ -51,6 +52,8 @@ public class jFrameCadastroDeProdutos extends JFrame {
 	private JButton buttonAlterar;
 	private JLabel lblTipoProduto;
 	private JComboBox categoria;
+	private JTable tableProduto;
+	private ProdutoTableModel produtoTableModel = new ProdutoTableModel();
 	
 	/**
 	 * Launch the application.
@@ -98,7 +101,22 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		contentPane.add(getButtonAlterar());
 		contentPane.add(getButtonCategoria());
 		contentPane.add(getlblTipoProduto());
+		contentPane.add(getTable());
+//		table = new JTable();
+////		jsp = new JScrollPane (table);		
+//		table.setBounds(39, 276, 351, 156);
+//		table.setModel(produtoTableModel);
+//		contentPane.add(table);
+////		scroll.setVisible(true);
+//		scroll = new JScrollPane(table);
+//		contentPane.add(scroll);
+//		contentPane.add(table);
+		JScrollPane scroll = new JScrollPane(tableProduto);
+		scroll.setBounds(24, 269, 400, 181);
+		contentPane.add(scroll);
+		
 	}
+	
 	
 	public JLabel getlblCadastroDeProdutos() {
 		if(lblCadastroDeProdutos == null) {
@@ -111,7 +129,7 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		}
 		return lblCadastroDeProdutos;
 	}
-	
+
 	public JLabel getLblCodigoProduto() {
 		if(lblCodigoProduto == null) {
 			lblCodigoProduto = new JLabel();			
@@ -122,6 +140,16 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			lblCodigoProduto.setText("Codigo Produto: ");
 		}
 		return lblCodigoProduto;
+	}
+
+	public JTable getTable() {
+		if(tableProduto == null) {
+			tableProduto = new JTable();			
+			tableProduto.setBounds(79, 271, 233, 400);
+			tableProduto.setSize(281, 154);
+			tableProduto.setModel(produtoTableModel);
+		}
+		return tableProduto;
 	}
 	
 	public JFormattedTextField getTextFieldCodigoProduto() {
@@ -306,13 +334,27 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		return lblTipoProduto;
 	}
 	
+//	public JTable getTableProduto() {
+//		if(tableProduto == null) {
+//			tableProduto = new JTable(new DefaultTableModel(new Object[][]{}, colunas));
+//			tableProduto.setSize(281, -38);
+//			tableProduto.setLocation(79, 328);
+//			tableProduto.setPreferredScrollableViewportSize(new Dimension(500,100));
+//			tableProduto.setFillsViewportHeight(true);
+//			tableProduto.getColumnModel().getColumn(0).setPreferredWidth(50);
+//			JScrollPane scrollPane=new JScrollPane(tableProduto);
+//			add(scrollPane);
+//		}
+//		return tableProduto;
+//	};
+	
 	public JComboBox getButtonCategoria() {
 		if(categoria == null) {
 			categoria = new JComboBox();
 			categoria.setModel(new DefaultComboBoxModel(new String[] {"selecione"}));
 			categoria.setBounds(259, 40, 95, 22);
 			Vector<Integer> categoriaBd = new Vector<>();
-		    try {
+		    try { 
 		    	ProdutoDao produtoDao = new ProdutoDao();
 		    	ResultSet rs = produtoDao.buscarCategoria();
 				while(rs.next()) {
@@ -327,12 +369,23 @@ public class jFrameCadastroDeProdutos extends JFrame {
 	}
 	
 	public void incluirBanco() {
-		try {
-			ProdutoController produto = new ProdutoController();
-			produto.cadastrarProduto(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			ProdutoController produto = new ProdutoController();
+//			produto.cadastrarProduto(this);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		Produto p = new Produto();
+		BigDecimal preco = new BigDecimal(textFieldPreco.getText());
+		BigDecimal quantidade = new BigDecimal(textFieldQuantidade.getText());
+		p.setCodigoProduto(Integer.parseInt(textFieldCodigoProduto.getText()));
+		p.setDescricao(textAreaDescricao.getText());
+		p.setNome(textFieldNome.getText());
+		p.setPreco(preco);
+		p.setQuantidade(quantidade);
+		p.setCodigoProduto(categoria.getSelectedIndex());
+		
+		produtoTableModel.addRow(p);
 	}
 	
 	public void validacao() {

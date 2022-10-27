@@ -19,7 +19,8 @@ public class LoginDao {
 		 * 
 		 * PreparedStatement takes responsibility for assembling a query.
 		 */
-		String sql = "insert into login(nome, email, senha) values ('"+nome+"', '"+email+"', md5('"+senha+"'))";
+//		String sql = "insert into login(nome, email, senha) values ('"+nome+"', '"+email+"', md5('"+senha+"'))";
+		String sql = "insert into login(nome, email, senha) values ('"+nome+"', '"+email+"', '"+senha+"')";
 		PreparedStatement statment = conexao.prepareStatement(sql);
 		statment.execute();
 		conexao.close();
