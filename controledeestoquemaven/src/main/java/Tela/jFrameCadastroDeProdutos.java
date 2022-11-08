@@ -1,12 +1,12 @@
 package Tela;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -22,14 +22,15 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
 
 import Controller.ProdutoController;
 import Dao.ProdutoDao;
 import LimitaCaracteres.LimitaCaracteres;
 import Model.Produto;
 import Model.ProdutoTableModel;
-import javax.swing.JScrollBar;
 
 
 public class jFrameCadastroDeProdutos extends JFrame {
@@ -95,25 +96,20 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		contentPane.add(getTextFieldQuantidade());
 		contentPane.add(getLblPreco());
 		contentPane.add(getTextFieldPreco());
-//		contentPane.add(scrollTextArea);
 		contentPane.add(getButtonIncluir());
 		contentPane.add(getButtonDeletar());
 		contentPane.add(getButtonAlterar());
 		contentPane.add(getButtonCategoria());
 		contentPane.add(getlblTipoProduto());
 		contentPane.add(getTable());
-//		table = new JTable();
-////		jsp = new JScrollPane (table);		
-//		table.setBounds(39, 276, 351, 156);
-//		table.setModel(produtoTableModel);
-//		contentPane.add(table);
-////		scroll.setVisible(true);
-//		scroll = new JScrollPane(table);
-//		contentPane.add(scroll);
-//		contentPane.add(table);
 		JScrollPane scroll = new JScrollPane(tableProduto);
 		scroll.setBounds(24, 269, 400, 181);
 		contentPane.add(scroll);
+		try {
+			produtoTableModel.carregarTabela();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -136,7 +132,7 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			lblCodigoProduto.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblCodigoProduto.setForeground(new Color(255, 255, 255));
 			lblCodigoProduto.setLocation(39, 41);
-			lblCodigoProduto.setSize(100, 20);
+			lblCodigoProduto.setSize(100, 20); 
 			lblCodigoProduto.setText("Codigo Produto: ");
 		}
 		return lblCodigoProduto;
@@ -147,6 +143,12 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			tableProduto = new JTable();			
 			tableProduto.setBounds(79, 271, 233, 400);
 			tableProduto.setSize(281, 154);
+			tableProduto.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+//					carregarCampos();
+				}
+			});
 			tableProduto.setModel(produtoTableModel);
 		}
 		return tableProduto;
@@ -308,6 +310,13 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		if(buttonDeletar == null) {
 			buttonDeletar = new JButton();
 			buttonDeletar.setBounds(170, 243, 90, 22);
+			buttonDeletar.addActionListener(e -> {
+				try {
+					deletar();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			});
 			buttonDeletar.setText("Deletar");
 		}
 		return buttonDeletar;
@@ -334,20 +343,6 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		return lblTipoProduto;
 	}
 	
-//	public JTable getTableProduto() {
-//		if(tableProduto == null) {
-//			tableProduto = new JTable(new DefaultTableModel(new Object[][]{}, colunas));
-//			tableProduto.setSize(281, -38);
-//			tableProduto.setLocation(79, 328);
-//			tableProduto.setPreferredScrollableViewportSize(new Dimension(500,100));
-//			tableProduto.setFillsViewportHeight(true);
-//			tableProduto.getColumnModel().getColumn(0).setPreferredWidth(50);
-//			JScrollPane scrollPane=new JScrollPane(tableProduto);
-//			add(scrollPane);
-//		}
-//		return tableProduto;
-//	};
-	
 	public JComboBox getButtonCategoria() {
 		if(categoria == null) {
 			categoria = new JComboBox();
@@ -369,12 +364,6 @@ public class jFrameCadastroDeProdutos extends JFrame {
 	}
 	
 	public void incluirBanco() {
-//		try {
-//			ProdutoController produto = new ProdutoController();
-//			produto.cadastrarProduto(this);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		Produto p = new Produto();
 		BigDecimal preco = new BigDecimal(textFieldPreco.getText());
 		BigDecimal quantidade = new BigDecimal(textFieldQuantidade.getText());
@@ -384,6 +373,12 @@ public class jFrameCadastroDeProdutos extends JFrame {
 		p.setPreco(preco);
 		p.setQuantidade(quantidade);
 		p.setCodigoProduto(categoria.getSelectedIndex());
+		try {
+			ProdutoController produto = new ProdutoController();
+			produto.cadastrarProduto(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		produtoTableModel.addRow(p);
 	}
@@ -405,4 +400,47 @@ public class jFrameCadastroDeProdutos extends JFrame {
 			incluirBanco();
 		}
 	}
+	
+	public void carregarTabela() {
+		ProdutoDao pDao = new ProdutoDao();
+		try {
+			List<Produto> produto = pDao.listarProdutos();
+			for(Produto p : produto) {
+				Object[] objeto = new Object[6];
+				objeto[0] = p.getProdutoCategoria();
+				objeto[1] = p.getCodigoProduto();
+				objeto[2] = p.getNome();
+				objeto[3] = p.getDescricao();
+				objeto[4] = p.getQuantidade();
+				objeto[5] = p.getPreco();
+				produtoTableModel.addRow(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deletar() throws SQLException {
+		ProdutoDao pDao = new ProdutoDao();
+		int linha = tableProduto.getSelectedRow();
+		String codigo = (String) tableProduto.getValueAt(linha, 1).toString();
+		pDao.deletar(codigo);
+		if(tableProduto.getSelectedRow() >= 0) {
+			produtoTableModel.removeRow(tableProduto.getSelectedRow());
+		} 
+		
+		
+	}
+	
+	/*
+	 * Quando selecionar uma coluna carregar os campos acima.
+	 */
+//	public void carregarCampos() {
+//		int linha = tableProduto.getSelectedRow();
+//		textFieldCodigoProduto.setText(tableProduto.getValueAt(linha, 1).toString());
+//		textFieldNome.setText(tableProduto.getValueAt(linha, 2).toString());
+//		textAreaDescricao.setText(tableProduto.getValueAt(linha, 3).toString());
+//		textFieldPreco.setText(tableProduto.getValueAt(linha, 4).toString());
+//		textFieldQuantidade.setText(tableProduto.getValueAt(linha, 5).toString());
+//	}
 }

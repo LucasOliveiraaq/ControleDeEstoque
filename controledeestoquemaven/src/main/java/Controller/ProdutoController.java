@@ -30,4 +30,11 @@ public class ProdutoController {
 		BigDecimal precoConvertido = new BigDecimal(preco);
 		produtoDao.cadastrarProduto(telaView.getButtonCategoria().getSelectedIndex(), codigoProduto, telaView.getTextFieldNome().getText(), telaView.getTextAreaDescricao().getText(), quantidadeConvertida, precoConvertido);
 	}
+	
+//	public void deletar(jFrameCadastroDeProdutos telaView) throws SQLException {
+//		Connection conexao = new Conexao().getConnection();
+//		ProdutoDao produtoDao = new ProdutoDao();
+//		Integer codigoProduto = Integer.parseInt(telaView.getTextFieldCodigoProduto().getText());
+//		produtoDao.deletar(codigoProduto);
+//	}
 }

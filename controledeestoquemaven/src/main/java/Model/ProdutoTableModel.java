@@ -1,9 +1,13 @@
 package Model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+
+import Dao.ProdutoDao;
 
 public class ProdutoTableModel extends AbstractTableModel{
 	
@@ -51,6 +55,17 @@ public class ProdutoTableModel extends AbstractTableModel{
 	
 	public void addRow(Produto p) {
 		this.produtos.add(p);
+		this.fireTableDataChanged();
 	}
-
+	
+	public void removeRow(int linha) {
+		this.produtos.remove(linha);
+		this.fireTableRowsDeleted(linha, linha);
+	}
+	
+	public void carregarTabela() throws SQLException {
+		ProdutoDao pDao = new ProdutoDao();
+		produtos = pDao.listarProdutos();
+	}
+	
 }

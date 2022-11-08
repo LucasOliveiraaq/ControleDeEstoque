@@ -36,7 +36,8 @@ public class ProdutoDao {
 		ResultSet rs =  statment.executeQuery();
 		while (rs.next()) {
 			Produto produto = new Produto();
-			produto.setCodigoProduto(rs.getInt("fk_produto_categoria"));
+			produto.setProdutoCategoria(rs.getInt("fk_produto_categoria"));
+			produto.setCodigoProduto(rs.getInt("codigo_produto"));
 			produto.setNome(rs.getString("nome"));
 			produto.setDescricao(rs.getString("descricao"));
 			produto.setQuantidade(rs.getBigDecimal("quantidade"));
@@ -45,5 +46,13 @@ public class ProdutoDao {
 			produtos.add(produto);
 		}
 		return produtos;
+	}
+	
+	public void deletar(String codigoProduto) throws SQLException {
+		Connection conexao = new Conexao().getConnection();
+		String sql = "delete from produto where produto.codigo_produto = " + codigoProduto;
+		PreparedStatement statment = conexao.prepareStatement(sql);
+		statment.execute();
+		conexao.close();
 	}
 }
